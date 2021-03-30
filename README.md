@@ -6,13 +6,15 @@ RC_WIFI.INO is based on code from https://github.com/programmer131/nodemcuCar/bl
 
 /data/virtualjoystick.js > is a modified version of https://github.com/jeromeetienne/virtualjoystick.js/blob/master/README.md
 
+# Instructions
 # Simple Instructions
 Note: before you upload the code make sure you have "ESP8266 Sketch Data Upload" installed
+
 1.Upload the code from the .ino into your NodeMCU with the Arduino
+
 2.Upload the data folder contents to SPIFFS https://github.com/esp8266/arduino-esp8266fs-plugin
 
 
-# Instructions
 # How to get ESP8266 Sketch Data Upload to upload to SPIFFS
 
 1.Make sure you use one of the supported versions of Arduino IDE and have ESP8266 core installed.
