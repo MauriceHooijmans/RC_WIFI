@@ -34,15 +34,20 @@ https://www.instructables.com/Using-ESP8266-SPIFFS/
 
 # Uploading to NodeMCU
 1. Create a new sketch with the code from RC_WIFI.INO and save.
-2. Go to sketch directory (choose Sketch > Show Sketch Folder).
-3. Create a directory named "data" and copy the files from the data folder.
 
+2. Go to sketch directory (choose Sketch > Show Sketch Folder).
+
+3. Create a directory named "data" and copy the files from the data folder.
 Note: Make sure you have selected a board, port, and closed Serial Monitor.
+
 4. Select Tools > ESP8266 Sketch Data Upload menu item. This should start uploading the files into ESP8266 flash file system. When done, IDE status bar will display SPIFFS Image Uploaded message. 
+
 5. And if not done yet press the regular upload button to upload the code.
 
 6. just to be sure RESET your NodeMCU for a clean boot.
+
 7. Grab your phone and search for a Wifi Access Point called "RC_WiFi" with password "W1r3L3ss".
+
 8. Open your browser and browse to 192.168.2.1
 
 This should open the NodeMCU's Web Interface wich in portrait will give you a 1 stick joystick and in landscape a 2 sticks controller.
