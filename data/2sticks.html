@@ -1,0 +1,266 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="/favicon.ico" rel="icon" type="image/x-icon" />
+		<style>
+		html {
+		    height:100%;
+		    width:100%;
+		    margin:0;
+		    padding:0;
+		}
+		#hideMe {
+		    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+		    /* Firefox */
+		    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+		    /* Safari and Chrome */
+		    -o-animation: cssAnimation 0s ease-in 5s forwards;
+		    /* Opera */
+		    animation: cssAnimation 0s ease-in 5s forwards;
+		    -webkit-animation-fill-mode: forwards;
+		    animation-fill-mode: forwards;
+		}
+		@keyframes cssAnimation {
+		    to {
+		        width:0;
+		        height:0;
+		        overflow:hidden;
+		    }
+		}
+		@-webkit-keyframes cssAnimation {
+		    to {
+		        width:0;
+		        height:0;
+		        visibility:hidden;
+		    }
+		}
+		body {
+		    height:100%;
+		    width:100%;
+			overflow	: hidden;
+			padding		: 0;
+			margin		: 0;
+			background-color: #BBB;
+		}
+		#container {
+			width		: 100%;
+			height		: 100%;
+			overflow	: hidden;
+			padding		: 0;
+			margin		: 0;
+			-webkit-user-select	: none;
+			-moz-user-select	: none;
+		}
+		#info {
+			z-index: 1;
+			width		: 100%;
+			padding		: 5px;
+			text-align	: center;
+		}
+		#info a {
+			color		: #66F;
+			text-decoration	: none;
+		}
+		#info a:hover {
+			text-decoration	: underline;
+		}
+		#stickinfo {
+			position	: absolute;
+			top		: 0px;
+			width		: 100%;
+			padding		: 5px;
+			text-align	: center;
+		}
+		#stickinfo a {
+			color		: #66F;
+			text-decoration	: none;
+		}
+		#stickinfo a:hover {
+			text-decoration	: underline;
+		}
+	    #stickwrapper { display: none; }
+   		@media only screen and (orientation:portrait){
+	        #stickswrapper { display:none; }
+	        #stickwrapper { display:block; }
+	    }
+	    @media only screen and (orientation:landscape){
+	        #stickwrapper { display:none; }
+   		 }
+
+		.stickL {
+			text-align-last: center;
+			background-color: #fff;
+			width		: 50%;
+			height		: 100%;
+			overflow	: hidden;
+			padding		: 0;
+			margin		: 0;
+			-webkit-user-select	: none;
+			-moz-user-select	: none;
+		}
+		.stickR {
+			float: right;
+			text-align-last: center;
+			background-color: #0101;
+			width		: 50%;
+			height		: 100%;
+			overflow	: hidden;
+			padding		: 0;
+			margin		: 0;
+			-webkit-user-select	: none;
+			-moz-user-select	: none;
+		}
+		#stick {
+			width		: 100%;
+			height		: 100%;
+			overflow	: hidden;
+			padding		: 0;
+			margin		: 0;
+			-webkit-user-select	: none;
+			-moz-user-select	: none;
+		}
+
+		</style>
+
+	</head>
+	<body touch-action: pan-y>
+		<div id="container">
+			<div id="stickswrapper">
+				<div id="info hideMe">
+				<p>Touch the screen and move or rotate to portrait for 1Sticks contoller.</p>	
+				</div> 
+				<div id="frontback" class="stickL" style="position: absolute !important;">
+					<span id="resultFB">.waiting for touch.</span>
+					<script src="./virtualjoystick.js"></script>
+					<script>
+						console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+				
+						var joystickFB	= new VirtualJoystick({
+							container	: document.getElementById('frontback'),
+							mouseSupport	: true,
+							limitStickTravel	: true,
+						});
+						joystickFB.addEventListener('touchStart', function(){
+							console.log('down')
+						})
+						joystickFB.addEventListener('touchEnd', function(){
+							console.log('up')
+							var xhrFB = new XMLHttpRequest();
+								xhrFB.open('PUT', "./jsData.html?fbi=1&?xfb="+0+"&yfb="+0)
+								xhrFB.send();
+						})
+						var prevFBX = 0;
+						var prevFBY = 0;
+						var newFBX = 0;
+						var newFBY = 0;
+						setInterval(function(){
+							var outputE2	= document.getElementById('resultFB');
+							newFBX = Math.round(joystickFB.deltaX());
+							newFBY = Math.round(joystickFB.deltaY()) * -1;
+							outputE2.innerHTML	= '<b>Forward/Brake :</b> '
+								+ ' Y:'+newFBY;
+							if ( newFBX != prevFBX || newFBY != prevFBY ){
+								var xhrFB = new XMLHttpRequest();
+								xhrFB.open('PUT', "./jsData.html?fbi=1&?xfb="+newFBX+"&yfb="+newFBY)
+								xhrFB.send();
+							}
+							prevFBX = newFBX;
+							prevFBY = newFBY;
+						}, 1/30 * 1000);
+					</script>
+				</div>
+				<div id="leftright" class="stickR" style="position: relative;">
+					<span id="resultLR">.waiting for touch.</span>
+					<script src="./virtualjoystick.js"></script>
+					<script>
+						console.log("touchscreen is", VirtualJoystickE3.touchScreenAvailable() ? "available" : "not available");
+				
+						var joystickLR	= new VirtualJoystickE3({
+							container	: document.getElementById('leftright'),
+							mouseSupport	: true,
+							limitStickTravel	: true,
+						});
+						joystickLR.addEventListener('touchStart', function(){
+							console.log('down')
+						})
+						joystickLR.addEventListener('touchEnd', function(){
+							console.log('up')
+							var xhrLR = new XMLHttpRequest();
+								xhrLR.open('PUT', "./jsData.html?lri=1&?xlr="+0+"&ylr="+0)
+								xhrLR.send();
+						})
+						var prevLRX = 0;
+						var prevLRY = 0;
+						var newLRX = 0;
+						var newLRY = 0;
+						setInterval(function(){
+							var outputE3	= document.getElementById('resultLR');
+							newLRX = Math.round(joystickLR.deltaXE3());
+							newLRY = Math.round(joystickLR.deltaYE3()) * -1;
+							outputE3.innerHTML	= '<b>Left/Right:</b> '
+								+ ' X:'+newLRX;
+							if ( newLRX != prevLRX || newLRY != prevLRY ){
+								var xhrLR = new XMLHttpRequest();
+								xhrLR.open('PUT', "./jsData.html?lri=1&?xlr="+newLRX+"&ylr="+newLRY)
+								xhrLR.send();
+							}
+							prevLRX = newLRX;
+							prevLRY = newLRY;
+						}, 1/30 * 1000);
+					</script>
+				</div>
+			</div>
+			<!-- ------------------------ Portrait mmode ------------------------  -->
+			<div id="stickwrapper">
+				<div id="stick">
+					<div id="stickinfo">
+						<p>Touch the screen and move or rotate to landscape for 2Sticks contoller</p>
+						<br/>
+						<span id="result">.waiting for touch.</span>
+					</div> 
+					<script src="./virtualjoystick.js"></script>
+					<script>
+						console.log("touchscreen is", VirtualJoystickE1.touchScreenAvailable() ? "available" : "not available");
+				
+						var joystick	= new VirtualJoystickE1({
+							container	: document.getElementById('stick'),
+							mouseSupport	: true,
+							limitStickTravel	: true,
+						});
+						joystick.addEventListener('touchStart', function(){
+							console.log('down')
+						})
+						joystick.addEventListener('touchEnd', function(){
+							console.log('up')
+							var xhr = new XMLHttpRequest();
+								xhr.open('PUT', "./jsData.html?x="+0+"&y="+0)
+								xhr.send();
+						})
+						var prevX = 0;
+						var prevY = 0;
+						var newX = 0;
+						var newY = 0;
+						setInterval(function(){
+							var outputEl	= document.getElementById('result');
+							newX = Math.round(joystick.deltaX());
+							newY = Math.round(joystick.deltaY()) * -1;
+							outputEl.innerHTML	= '<b>Position:</b> '
+								+ ' X:'+newX
+								+ ' Y:'+newY;
+							if ( newX != prevX || newY != prevY ){
+								var xhr = new XMLHttpRequest();
+								xhr.open('PUT', "./jsData.html?x="+newX+"&y="+newY)
+								xhr.send();
+							}
+							prevX = newX;
+							prevY = newY;
+						}, 1/30 * 1000);
+					</script>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
