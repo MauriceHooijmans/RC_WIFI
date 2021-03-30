@@ -46,3 +46,8 @@ Note: Make sure you have selected a board, port, and closed Serial Monitor.
 
 This should open the NodeMCU's Web Interface wich in portrait will give you a 1 stick joystick and in landscape a 2 sticks controller.
 
+# Disclaimer
+This code is a work in progress and is not finished.
+Be carefull: as metal objects could interfere with Wifi signals, 
+I did what i could to prepare for lockouts and stopping the RC Motor altough there is always a chance for it to still go full throttle.
+I will be in no way responsible for injuries or braking of your RC equipment.
