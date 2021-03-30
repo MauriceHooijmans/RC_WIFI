@@ -7,7 +7,7 @@
 
 /* Put your SSID & Password */
 const char* ssid = "RC_WiFi";  // Enter SSID here
-const char* password = "dr44dl00s";  //Enter Password here <- easy code for testing, Updated in LIVE env
+const char* password = "W1r3L3ss";  //Enter Password here <- easy code for testing, Updated in LIVE env
 
 /* Put IP Address details */
 IPAddress local_ip(192,168,2,1);
